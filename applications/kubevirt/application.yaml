@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubevirt-thinkstation
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/highsmithjd/retail-edge-gitops.git
+    targetRevision: main
+    path: applications/kubevirt/base
+  destination:
+    server: https://192.168.1.157:6443
+    namespace: kubevirt
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
