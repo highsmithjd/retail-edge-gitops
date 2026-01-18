@@ -1,0 +1,38 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: retail-kiosk-vm
+  namespace: retail
+  labels:
+    app: retail-kiosk
+    store-id: "001"
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: retail-kiosk-vm
+    spec:
+      domain:
+        cpu:
+          cores: 4
+        devices:
+          disks:
+          - name: windows-disk
+            disk:
+              bus: virtio
+          interfaces:
+          - name: default
+            masquerade: {}
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8Gi
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - name: windows-disk
+        persistentVolumeClaim:
+          claimName: windows11-disk
