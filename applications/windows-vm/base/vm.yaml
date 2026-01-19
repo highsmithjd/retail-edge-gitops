@@ -7,7 +7,7 @@ metadata:
     app: retail-kiosk
     store-id: "001"
 spec:
-  running: false
+  running: true
   template:
     metadata:
       labels:
@@ -21,6 +21,10 @@ spec:
           - name: windows-disk
             disk:
               bus: virtio
+          - name: windows-iso
+            cdrom:
+             bus: sata
+             readonly: true
           interfaces:
           - name: default
             masquerade: {}
@@ -36,3 +40,6 @@ spec:
       - name: windows-disk
         persistentVolumeClaim:
           claimName: windows11-disk
+      - name: windows-iso
+        persistentVolumeClaim:
+          claimName: windows11-iso
